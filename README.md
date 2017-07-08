@@ -20,4 +20,10 @@
 
 ## 『 4. nested document 』
 - 
-### [ 4.1. query ]
+### [ 4.1. Sub Docs ]
+- 
+
+## 『 n. reference 』
+### [ Mongoose ]
+- [Sub Docs](http://mongoosejs.com/docs/subdocs.html)
+- [Queries](http://mongoosejs.com/docs/queries.html)

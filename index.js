@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const dbConnectionString = require('./config/config').dbConnectionString;
 const CommentModel = require('./models/CommentModel');
 const PostModel = require('./models/PostModel');
+const CommentListModel = require('./models/CommentListModel');
 
 mongoose.connect(dbConnectionString);
 const db = mongoose.connection;
@@ -35,28 +36,61 @@ db.once('open', () => {
   //   console.log('testPost2 save successed', result);
   // });
 
-                      // 指定要query的欄位，沒有指定就不會出現
-  PostModel.find({ name: 'alvinyen219' }, '_id name content', (err, postArray) => {
-    if (err) { console.log('PostModel.find err：', err); }
+  // ** query start
+  //                     // 指定要query的欄位，沒有指定就不會出現
+  // PostModel.find({ name: 'alvinyen219' }, '_id name content', (err, postArray) => {
+  //   if (err) { console.log('PostModel.find err：', err); }
 
-    // 找不到會回傳空陣列！！記得驗證非空陣列！！
-    console.log(postArray);
+  //   // 找不到會回傳空陣列！！記得驗證非空陣列！！
+  //   console.log(postArray);
 
-    console.log(typeof postArray[0].x); // 會回傳undefined
-    console.log(postArray[0].x); // 會回傳undefined
+  //   console.log(typeof postArray[0].x); // 會回傳undefined
+  //   console.log(postArray[0].x); // 會回傳undefined
 
-    console.log(typeof postArray[0]._id);
-    console.log(postArray[0]._id);
+  //   console.log(typeof postArray[0]._id);
+  //   console.log(postArray[0]._id);
 
-    const _idInStringType = postArray[0]._id.toString();
-    console.log(typeof _idInStringType);
-    console.log(_idInStringType);
+  //   const _idInStringType = postArray[0]._id.toString();
+  //   console.log(typeof _idInStringType);
+  //   console.log(_idInStringType);
 
-    console.log(typeof postArray[0]._id.valueOf());
-    console.log(postArray[0]._id.valueOf());
+  //   console.log(typeof postArray[0]._id.valueOf());
+  //   console.log(postArray[0]._id.valueOf());
 
-    console.log(postArray[0]._id.getTimestamp()); 
+  //   console.log(postArray[0]._id.getTimestamp()); 
 
+  // });
+  // ** query end
+
+  // ** subdocument start
+  let testComment1 = new CommentModel(
+    {
+      from: 'rose',
+      commentValue: 'good comment!',
+    }
+  );
+  let testComment2 = new CommentModel(
+    {
+      from: 'jakevin',
+      commentValue: 'badbadbad',
+    }
+  );
+  let testCommentList = new CommentListModel(
+    {
+      postId: '59639b96e3bab4108553a9c4',
+      commentList: [testComment1, testComment2],
+    }
+  );
+
+  console.log(`subdocument can be edit by json style access`);
+  console.log(`在save前entity都可透過json的方式操作`);
+  console.log(`testCommen2 before change before save： ${testCommentList.commentList[1]}`);
+  testCommentList.commentList[1].from = 'eminem';
+  console.log(`testCommen2 after change before save： ${testCommentList.commentList[1]}`);
+
+  testCommentList.save((err, result) => {
+    if (err) { console.log('testCommentList save failed：', err); }
+    console.log('testCommentList save successed：', result);
   });
 
 });

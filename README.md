@@ -7,7 +7,8 @@
 <hr>
 
 ## 『 2. basic read query 』
-- 
+### [ 2.1. Entity ]
+- 在save前entity都可透過json的方式操作
 
 <hr>
 <hr>
@@ -37,3 +38,4 @@
 ### [ Mongoose ]
 - [Sub Docs](http://mongoosejs.com/docs/subdocs.html)
 - [Queries](http://mongoosejs.com/docs/queries.html)
+
